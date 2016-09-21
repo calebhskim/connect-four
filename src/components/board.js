@@ -20,8 +20,11 @@ class Board extends React.Component {
   }
 
   handleClick(row, col) {
-    console.log("STATE :: ", this.state);
-    console.log("ROW :: COL", row, col);
+    var newState = this.state.board;
+    newState[row][col] = newState[row][col] === 0 ? 1 : 0;
+    this.setState({
+        board: newState
+    });
   }
 
   generateCols(row) {
@@ -29,7 +32,7 @@ class Board extends React.Component {
       for (var i = 0; i < COLS; i++) {
           cols.push(
               <td key={i}>
-                  <Cell handleClick={this.handleClick} active={false} row={row} col={i} />
+                  <Cell handleClick={this.handleClick} active={this.state.board[row][i] !== 0} row={row} col={i} />
               </td>
           );
       }

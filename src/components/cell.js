@@ -14,7 +14,7 @@ class Cell extends React.Component {
 
   render() {
     return (
-        <div onClick={this.onClick} className="cell">
+        <div onClick={this.onClick} className={`cell ${this.props.active ? "played" : ""}`}>
         </div>
     )
   }
