@@ -12,7 +12,8 @@ class Board extends React.Component {
        super();
        this.handleClick = this.handleClick.bind(this);
        this.state = {
-           board: []
+           board: [],
+           player: 1
        };
        for (var i = 0; i < ROWS; i++) {
            this.state.board[i] = _.times(COLS, _.constant(0));
@@ -20,10 +21,13 @@ class Board extends React.Component {
   }
 
   handleClick(row, col) {
-    var newState = this.state.board;
-    newState[row][col] = newState[row][col] === 0 ? 1 : 0;
+    var newState = this.state.board,
+        player = this.state.player === 1 ? 2 : 1;
+
+    newState[row][col] = newState[row][col] === 0 ? this.state.player : 0;
     this.setState({
-        board: newState
+        board: newState,
+        player: player
     });
   }
 
@@ -32,7 +36,7 @@ class Board extends React.Component {
       for (var i = 0; i < COLS; i++) {
           cols.push(
               <td key={i}>
-                  <Cell handleClick={this.handleClick} active={this.state.board[row][i] !== 0} row={row} col={i} />
+                  <Cell handleClick={this.handleClick} player={this.state.board[row][i]} row={row} col={i} />
               </td>
           );
       }

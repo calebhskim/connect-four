@@ -27,6 +27,16 @@ td {
 }
 
 .played {
-  border: 2px solid black;
+  border-style: solid;
+  border-width: 1px;
   border-radius: 50%;
+}
+
+.player1 {
+  border-color: red;
+}
+
+
+.player2 {
+  border-color: blue;
 }

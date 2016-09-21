@@ -21458,7 +21458,8 @@
 	        super();
 	        this.handleClick = this.handleClick.bind(this);
 	        this.state = {
-	            board: []
+	            board: [],
+	            player: 1
 	        };
 	        for (var i = 0; i < ROWS; i++) {
 	            this.state.board[i] = _.times(COLS, _.constant(0));
@@ -21466,12 +21467,14 @@
 	    }
 
 	    handleClick(row, col) {
-	        var newState = this.state.board;
-	        newState[row][col] = newState[row][col] === 0 ? 1 : 0;
+	        var newState = this.state.board,
+	            player = this.state.player === 1 ? 2 : 1;
+
+	        newState[row][col] = newState[row][col] === 0 ? this.state.player : 0;
 	        this.setState({
-	            board: newState
+	            board: newState,
+	            player: player
 	        });
-	        console.log("STATE :: ", this.state.board);
 	    }
 
 	    generateCols(row) {
@@ -21480,7 +21483,7 @@
 	            cols.push(React.createElement(
 	                'td',
 	                { key: i },
-	                React.createElement(Cell, { handleClick: this.handleClick, active: this.state.board[row][i] !== 0, row: row, col: i })
+	                React.createElement(Cell, { handleClick: this.handleClick, player: this.state.board[row][i], row: row, col: i })
 	            ));
 	        }
 	        return cols;
@@ -21521,6 +21524,8 @@
 
 	const React = __webpack_require__(1);
 
+	var playerClasses = ["", "player1 played", "player2 played"];
+
 	class Cell extends React.Component {
 	    constructor() {
 	        super();
@@ -21532,7 +21537,9 @@
 	    }
 
 	    render() {
-	        return React.createElement('div', { onClick: this.onClick, className: `cell ${ this.props.active ? "played" : "" }` });
+	        const player = playerClasses[this.props.player];
+
+	        return React.createElement('div', { onClick: this.onClick, className: `cell ${ player }` });
 	    }
 	}
 

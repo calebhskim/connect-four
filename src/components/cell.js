@@ -2,6 +2,8 @@
 
 const React = require('react');
 
+var playerClasses = ["", "player1 played", "player2 played"];
+
 class Cell extends React.Component {
   constructor() {
       super();
@@ -13,8 +15,10 @@ class Cell extends React.Component {
   }
 
   render() {
+    const player = playerClasses[this.props.player];
+    
     return (
-        <div onClick={this.onClick} className={`cell ${this.props.active ? "played" : ""}`}>
+        <div onClick={this.onClick} className={`cell ${player}`}>
         </div>
     )
   }
