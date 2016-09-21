@@ -7,7 +7,7 @@
     "test": "npm run lint",
     "build": "babel src --out-dir lib && webpack ./lib/entry.js ./public/scripts/index.js",
     "lint": "npm run build && eslint app/** lib/** public/**",
-    "start": "npm run build && node app.js"
+    "start": "npm run build && node server.js"
   },
   "repository": {
     "type": "git",
