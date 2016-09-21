@@ -24,7 +24,7 @@ class Board extends React.Component {
     var newState = this.state.board,
         player = this.state.player === 1 ? 2 : 1;
 
-    newState[row][col] = newState[row][col] === 0 ? this.state.player : 0;
+    newState[row][col] = this.state.player;
     this.setState({
         board: newState,
         player: player
@@ -36,7 +36,7 @@ class Board extends React.Component {
       for (var i = 0; i < COLS; i++) {
           cols.push(
               <td key={i}>
-                  <Cell handleClick={this.handleClick} player={this.state.board[row][i]} row={row} col={i} />
+                  <Cell handleClick={this.handleClick} played={this.state.board[row][i] !== 0} player={this.state.board[row][i]} row={row} col={i} />
               </td>
           );
       }

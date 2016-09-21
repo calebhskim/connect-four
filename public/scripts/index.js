@@ -21470,7 +21470,7 @@
 	        var newState = this.state.board,
 	            player = this.state.player === 1 ? 2 : 1;
 
-	        newState[row][col] = newState[row][col] === 0 ? this.state.player : 0;
+	        newState[row][col] = this.state.player;
 	        this.setState({
 	            board: newState,
 	            player: player
@@ -21483,7 +21483,7 @@
 	            cols.push(React.createElement(
 	                'td',
 	                { key: i },
-	                React.createElement(Cell, { handleClick: this.handleClick, player: this.state.board[row][i], row: row, col: i })
+	                React.createElement(Cell, { handleClick: this.handleClick, played: this.state.board[row][i] !== 0, player: this.state.board[row][i], row: row, col: i })
 	            ));
 	        }
 	        return cols;
@@ -21533,7 +21533,10 @@
 	    }
 
 	    onClick() {
-	        this.props.handleClick(this.props.row, this.props.col);
+	        console.log(this.props.played);
+	        if (!this.props.played) {
+	            this.props.handleClick(this.props.row, this.props.col);
+	        }
 	    }
 
 	    render() {

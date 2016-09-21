@@ -11,7 +11,9 @@ class Cell extends React.Component {
   }
 
   onClick() {
-      this.props.handleClick(this.props.row, this.props.col);
+      if (!this.props.played) {
+          this.props.handleClick(this.props.row, this.props.col);
+      }
   }
 
   render() {
