@@ -12,9 +12,21 @@ html, body {
   align-self: center;
 }
 
+table {
+  border-collapse: collapse;
+}
+
 td {
-  border: 1px solid black;
+  border: 5px solid black;
   height: 100px;
   width: 100px;
 }
 
+.cell {
+  height: 100%;
+}
+
+.played {
+  border: 2px solid black;
+  border-radius: 50%;
+}
