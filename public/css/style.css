@@ -1,9 +1,20 @@
-table {
-    width: 700px,
-    height: 600px
+html, body {
+  height: 100%;
+}
+
+#app-mount {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#app {
+  align-self: center;
 }
 
 td {
-    border: 1px solid black
+  border: 1px solid black;
+  height: 100px;
+  width: 100px;
 }
 
