@@ -9,5 +9,5 @@ npm install
 npm run start
 ```
 
-Then navigate to (http://localhost:3000).
+Then navigate to [http://localhost:3000/](http://localhost:3000/).
 
