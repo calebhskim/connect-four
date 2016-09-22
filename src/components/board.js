@@ -1,29 +1,22 @@
-'use strict';
-
 const React = require('react'),
-      Column = require('./column.js'),
-      _ = require('lodash');
+      _ = require('lodash'),
+      Column = require('./column.js');
 
 const COLS = 7,
       ROWS = 6;
 
 class Board extends React.Component {
   constructor() {
-       super();
-       this.handleClick = this.handleClick.bind(this);
-       this.state = {
-           board: [],
-           player: 1
-       };
-       for (var i = 0; i < COLS; i++) {
-           this.state.board[i] = {
-             state: _.times(ROWS, _.constant(0)),
-             lastPlayed: -1
-           };
-       };
+    super();
+    this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      board: _.range(COLS).fill({state: _.times(ROWS, _.constant(0)), lastPlayed: -1}),
+      player: 1,
+    };
   }
 
   handleClick(col, lastPlayedRow) {
+    console.log(this.state.board);
     var newState = this.state.board,
         player = this.state.player === 1 ? 2 : 1;
     
@@ -31,26 +24,29 @@ class Board extends React.Component {
     newState[col].lastPlayed++;
 
     this.setState({
-        board: newState,
-        player: player
+      board: newState,
+      player: player
     });
   }
 
   generateCols() {
-      var cols = [];
-      for (var i = 0; i < COLS; i++) {
-          cols.push(<Column key={i} handleClick={this.handleClick} column={i} columnState={this.state.board[i]}/>);
-      }
-      return cols;
+    var i, cols = [];
+
+    for (i = 0; i < COLS; i += 1) {
+      cols.push(
+        <Column key={i} handleClick={this.handleClick} column={i} columnState={this.state.board[i]}/>
+      );
+    }
+    return cols;
   }
 
   render() {
     return (
-        <table>
-             <tbody>
-                 {this.generateCols()}
-             </tbody>
-         </table>
+      <table>
+        <tbody>
+          {this.generateCols()}
+        </tbody>
+      </table>
     )
   }
 }

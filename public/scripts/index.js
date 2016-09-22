@@ -21423,19 +21423,15 @@
 /* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
 	const React = __webpack_require__(1),
 	      Board = __webpack_require__(173);
 
-	class App extends React.Component {
-	  render() {
-	    return React.createElement(
-	      'div',
-	      { id: 'app' },
-	      React.createElement(Board, null)
-	    );
-	  }
+	function App() {
+	  return React.createElement(
+	    'div',
+	    { id: 'app' },
+	    React.createElement(Board, null)
+	  );
 	}
 
 	module.exports = App;
@@ -21444,148 +21440,64 @@
 /* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
 	const React = __webpack_require__(1),
-	      Column = __webpack_require__(174),
-	      _ = __webpack_require__(176);
+	      _ = __webpack_require__(174),
+	      Column = __webpack_require__(176);
 
 	const COLS = 7,
 	      ROWS = 6;
 
 	class Board extends React.Component {
-	    constructor() {
-	        super();
-	        this.handleClick = this.handleClick.bind(this);
-	        this.state = {
-	            board: [],
-	            player: 1
-	        };
-	        for (var i = 0; i < COLS; i++) {
-	            this.state.board[i] = {
-	                state: _.times(ROWS, _.constant(0)),
-	                lastPlayed: -1
-	            };
-	        };
+	  constructor() {
+	    super();
+	    this.handleClick = this.handleClick.bind(this);
+	    this.state = {
+	      board: _.range(COLS).fill({ state: _.times(ROWS, _.constant(0)), lastPlayed: -1 }),
+	      player: 1
+	    };
+	  }
+
+	  handleClick(col, lastPlayedRow) {
+	    console.log(this.state.board);
+	    var newState = this.state.board,
+	        player = this.state.player === 1 ? 2 : 1;
+
+	    newState[col].state[lastPlayedRow + 1] = this.state.player;
+	    newState[col].lastPlayed++;
+
+	    this.setState({
+	      board: newState,
+	      player: player
+	    });
+	  }
+
+	  generateCols() {
+	    var i,
+	        cols = [];
+
+	    for (i = 0; i < COLS; i += 1) {
+	      cols.push(React.createElement(Column, { key: i, handleClick: this.handleClick, column: i, columnState: this.state.board[i] }));
 	    }
+	    return cols;
+	  }
 
-	    handleClick(col, lastPlayedRow) {
-	        var newState = this.state.board,
-	            player = this.state.player === 1 ? 2 : 1;
-
-	        newState[col].state[lastPlayedRow + 1] = this.state.player;
-	        newState[col].lastPlayed++;
-
-	        this.setState({
-	            board: newState,
-	            player: player
-	        });
-	    }
-
-	    generateCols() {
-	        var cols = [];
-	        for (var i = 0; i < COLS; i++) {
-	            cols.push(React.createElement(Column, { key: i, handleClick: this.handleClick, column: i, columnState: this.state.board[i] }));
-	        }
-	        return cols;
-	    }
-
-	    render() {
-	        return React.createElement(
-	            'table',
-	            null,
-	            React.createElement(
-	                'tbody',
-	                null,
-	                this.generateCols()
-	            )
-	        );
-	    }
+	  render() {
+	    return React.createElement(
+	      'table',
+	      null,
+	      React.createElement(
+	        'tbody',
+	        null,
+	        this.generateCols()
+	      )
+	    );
+	  }
 	}
 
 	module.exports = Board;
 
 /***/ },
 /* 174 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	const React = __webpack_require__(1),
-	      Cell = __webpack_require__(175);
-
-	const ROWS = 6;
-
-	class Column extends React.Component {
-	    constructor() {
-	        super();
-	        this.handleClick = this.handleClick.bind(this);
-	    }
-
-	    handleClick() {
-	        console.log("COLUMN :: ", this.props);
-	        if (this.props.columnState.lastPlayed < ROWS - 1) {
-	            this.props.handleClick(this.props.column, this.props.columnState.lastPlayed);
-	        }
-	    }
-
-	    generateRows() {
-	        var cells = [];
-
-	        for (var i = 0; i < ROWS; i++) {
-	            cells.push(React.createElement(Cell, { key: i, handleClick: this.handleClick, player: this.props.columnState.state[i], row: i }));
-	        }
-
-	        return cells;
-	    }
-
-	    render() {
-	        return React.createElement(
-	            'tr',
-	            null,
-	            this.generateRows()
-	        );
-	    }
-	}
-
-	module.exports = Column;
-
-/***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	const React = __webpack_require__(1);
-
-	var playerClasses = ["", "player1 played", "player2 played"];
-
-	class Cell extends React.Component {
-	    constructor() {
-	        super();
-	        this.onClick = this.onClick.bind(this);
-	    }
-
-	    onClick() {
-	        console.log("CELL");
-	        this.props.handleClick();
-	    }
-
-	    render() {
-	        const player = playerClasses[this.props.player];
-
-	        return React.createElement(
-	            'td',
-	            null,
-	            React.createElement('div', { onClick: this.onClick, className: `cell ${ player }` })
-	        );
-	    }
-	}
-
-	module.exports = Cell;
-
-/***/ },
-/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -38484,10 +38396,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(177)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(175)(module)))
 
 /***/ },
-/* 177 */
+/* 175 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -38501,6 +38413,79 @@
 		return module;
 	}
 
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	const React = __webpack_require__(1),
+	      Cell = __webpack_require__(177);
+
+	const ROWS = 6;
+
+	class Column extends React.Component {
+	    constructor() {
+	        super();
+	        this.handleClick = this.handleClick.bind(this);
+	    }
+
+	    handleClick() {
+	        if (this.props.columnState.lastPlayed < ROWS - 1) {
+	            this.props.handleClick(this.props.column, this.props.columnState.lastPlayed);
+	        }
+	    }
+
+	    generateRows() {
+	        var cells = [];
+
+	        for (var i = 0; i < ROWS; i++) {
+	            cells.push(React.createElement(Cell, { key: i, handleClick: this.handleClick, player: this.props.columnState.state[i], row: i }));
+	        }
+
+	        return cells;
+	    }
+
+	    render() {
+	        return React.createElement(
+	            'tr',
+	            null,
+	            this.generateRows()
+	        );
+	    }
+	}
+
+	module.exports = Column;
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	const React = __webpack_require__(1);
+
+	var playerClasses = ["", "player1 played", "player2 played"];
+
+	class Cell extends React.Component {
+	    constructor() {
+	        super();
+	        this.onClick = this.onClick.bind(this);
+	    }
+
+	    onClick() {
+	        this.props.handleClick();
+	    }
+
+	    render() {
+	        const player = playerClasses[this.props.player];
+
+	        return React.createElement(
+	            "td",
+	            null,
+	            React.createElement("div", { onClick: this.onClick, className: `cell ${ player }` })
+	        );
+	    }
+	}
+
+	module.exports = Cell;
 
 /***/ }
 /******/ ]);

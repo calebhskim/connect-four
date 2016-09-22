@@ -1,5 +1,3 @@
-'use strict';
-
 const React = require('react');
 
 var playerClasses = ["", "player1 played", "player2 played"];
