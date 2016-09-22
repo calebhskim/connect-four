@@ -1,11 +1,11 @@
 'use strict';
 
 const React = require('react'),
-      Cell = require('./cell.js'),
+      Column = require('./column.js'),
       _ = require('lodash');
 
-const ROWS = 6,
-      COLS = 7;
+const COLS = 7,
+      ROWS = 6;
 
 class Board extends React.Component {
   constructor() {
@@ -15,51 +15,40 @@ class Board extends React.Component {
            board: [],
            player: 1
        };
-       for (var i = 0; i < ROWS; i++) {
-           this.state.board[i] = _.times(COLS, _.constant(0));
+       for (var i = 0; i < COLS; i++) {
+           this.state.board[i] = {
+             state: _.times(ROWS, _.constant(0)),
+             lastPlayed: -1
+           };
        };
   }
 
-  handleClick(row, col) {
+  handleClick(col, lastPlayedRow) {
     var newState = this.state.board,
         player = this.state.player === 1 ? 2 : 1;
+    
+    newState[col].state[lastPlayedRow + 1] = this.state.player;
+    newState[col].lastPlayed++;
 
-    newState[row][col] = this.state.player;
     this.setState({
         board: newState,
         player: player
     });
   }
 
-  generateCols(row) {
+  generateCols() {
       var cols = [];
       for (var i = 0; i < COLS; i++) {
-          cols.push(
-              <td key={i}>
-                  <Cell handleClick={this.handleClick} played={this.state.board[row][i] !== 0} player={this.state.board[row][i]} row={row} col={i} />
-              </td>
-          );
+          cols.push(<Column key={i} handleClick={this.handleClick} column={i} columnState={this.state.board[i]}/>);
       }
       return cols;
-  }
-
-  generateRows() {
-      var rows = [];
-      for (var i = 0; i < ROWS; i++) {
-          rows.push(
-                  <tr key={i}>
-                      {this.generateCols(i)}
-                  </tr>
-                  );
-      }
-      return rows;
   }
 
   render() {
     return (
         <table>
              <tbody>
-                 {this.generateRows()}
+                 {this.generateCols()}
              </tbody>
          </table>
     )
