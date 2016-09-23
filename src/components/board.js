@@ -10,7 +10,12 @@ class Board extends React.Component {
     super();
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      board: _.range(COLS).fill({state: _.times(ROWS, _.constant(0)), lastPlayed: -1}),
+      board: _.range(COLS).map(function () {
+               return {
+                 state: _.times(ROWS, _.constant(0)), 
+                 lastPlayed: -1
+               }
+             }),
       player: 1,
     };
   }
