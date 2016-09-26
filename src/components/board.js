@@ -17,20 +17,21 @@ class Board extends React.Component {
                }
              }),
       player: 1,
+      started: false
     };
   }
 
   handleClick(col, lastPlayedRow) {
-    console.log(this.state.board);
     var newState = this.state.board,
         player = this.state.player === 1 ? 2 : 1;
     
     newState[col].state[lastPlayedRow + 1] = this.state.player;
-    newState[col].lastPlayed++;
-
+    newState[col].lastPlayed += 1;
+    console.log(newState);
     this.setState({
       board: newState,
-      player: player
+      player: player,
+      started: true
     });
   }
 
@@ -47,11 +48,16 @@ class Board extends React.Component {
 
   render() {
     return (
-      <table>
-        <tbody>
-          {this.generateCols()}
-        </tbody>
-      </table>
+      <div id="board">
+        <div id="start" className={this.state.started ? "started" : "not-started"}>
+          <h2>Click any column to start!</h2>
+        </div>
+        <table>
+          <tbody>
+            {this.generateCols()}
+          </tbody>
+        </table>
+      </div>
     )
   }
 }

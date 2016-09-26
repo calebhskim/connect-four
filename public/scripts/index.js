@@ -21452,22 +21452,28 @@
 	    super();
 	    this.handleClick = this.handleClick.bind(this);
 	    this.state = {
-	      board: _.range(COLS).fill({ state: _.times(ROWS, _.constant(0)), lastPlayed: -1 }),
-	      player: 1
+	      board: _.range(COLS).map(function () {
+	        return {
+	          state: _.times(ROWS, _.constant(0)),
+	          lastPlayed: -1
+	        };
+	      }),
+	      player: 1,
+	      started: false
 	    };
 	  }
 
 	  handleClick(col, lastPlayedRow) {
-	    console.log(this.state.board);
 	    var newState = this.state.board,
 	        player = this.state.player === 1 ? 2 : 1;
 
 	    newState[col].state[lastPlayedRow + 1] = this.state.player;
-	    newState[col].lastPlayed++;
-
+	    newState[col].lastPlayed += 1;
+	    console.log(newState);
 	    this.setState({
 	      board: newState,
-	      player: player
+	      player: player,
+	      started: true
 	    });
 	  }
 
@@ -21483,12 +21489,25 @@
 
 	  render() {
 	    return React.createElement(
-	      'table',
-	      null,
+	      'div',
+	      { id: 'board' },
 	      React.createElement(
-	        'tbody',
+	        'div',
+	        { id: 'start', className: this.state.started ? "started" : "not-started" },
+	        React.createElement(
+	          'h2',
+	          null,
+	          'Click any column to start!'
+	        )
+	      ),
+	      React.createElement(
+	        'table',
 	        null,
-	        this.generateCols()
+	        React.createElement(
+	          'tbody',
+	          null,
+	          this.generateCols()
+	        )
 	      )
 	    );
 	  }
@@ -38439,7 +38458,7 @@
 	        var cells = [];
 
 	        for (var i = 0; i < ROWS; i++) {
-	            cells.push(React.createElement(Cell, { key: i, handleClick: this.handleClick, player: this.props.columnState.state[i], row: i }));
+	            cells.push(React.createElement(Cell, { key: i, player: this.props.columnState.state[i], row: i }));
 	        }
 
 	        return cells;
@@ -38448,7 +38467,7 @@
 	    render() {
 	        return React.createElement(
 	            'tr',
-	            null,
+	            { onClick: this.handleClick },
 	            this.generateRows()
 	        );
 	    }
@@ -38465,24 +38484,19 @@
 	var playerClasses = ["", "player1 played", "player2 played"];
 
 	class Cell extends React.Component {
-	    constructor() {
-	        super();
-	        this.onClick = this.onClick.bind(this);
-	    }
+	  constructor() {
+	    super();
+	  }
 
-	    onClick() {
-	        this.props.handleClick();
-	    }
+	  render() {
+	    const player = playerClasses[this.props.player];
 
-	    render() {
-	        const player = playerClasses[this.props.player];
-
-	        return React.createElement(
-	            "td",
-	            null,
-	            React.createElement("div", { onClick: this.onClick, className: `cell ${ player }` })
-	        );
-	    }
+	    return React.createElement(
+	      "td",
+	      { className: this.props.row == 0 ? "bottom" : "" },
+	      React.createElement("div", { className: `cell ${ player }` })
+	    );
+	  }
 	}
 
 	module.exports = Cell;
