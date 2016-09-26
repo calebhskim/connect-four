@@ -1,0 +1,13 @@
+{
+  "extends": ["eslint-config-airbnb"],
+  "ecmaFeatures": {
+    "jsx": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "one-var": "off",
+    "eol-last": "off"
+  }
+}

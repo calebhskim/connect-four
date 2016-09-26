@@ -1,0 +1,82 @@
+html, body {
+  height: 100%;
+  font-family: 'Raleway', 'Source Sans Pro', sans-serif;
+}
+
+#app-mount {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#app {
+  align-self: center;
+  height: 100%;
+  width: 100%;
+}
+
+#board {
+  position: relative;
+  height: 100%;
+  width: 50%;
+  margin: 0 auto; 
+  display: flex;
+  justify-content: center;
+}
+
+#start {
+  position: absolute;
+  text-align: center;
+  margin: 0 auto;
+  width: 50%;
+  align-self: center;
+  z-index: 23;
+}
+
+table {
+  border-collapse: collapse;
+  position: absolute;
+  transform: rotate(270deg);
+}
+
+td {
+  border: None;
+  height: 100px;
+  width: 100px;
+  padding: 0;
+}
+
+tr:hover {
+  /* background-color: rgba(32, 107, 236, 0.3); */
+  background-color: #14AFFA;
+}
+
+.bottom {
+  border-left: 2px solid #14AFFA;
+}
+
+.cell {
+  height: 70%;
+  width: 70%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.played {
+  border-style: none;
+  border-width: 2px;
+  border-radius: 50%;
+}
+
+.player1 {
+  background-color: #FD0531;
+}
+
+.player2 {
+  background-color: #FFD805;
+}
+
+.started {
+  display: none;
+}
