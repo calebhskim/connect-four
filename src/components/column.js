@@ -20,7 +20,7 @@ class Column extends React.Component {
 
     for (var i = 0; i < ROWS; i++) {
       cells.push(
-          <Cell key={i} player={this.props.columnState.state[i]} row={i} />
+          <Cell key={i} player={this.props.columnState.state[i].player} row={i} />
           );
     }
 

@@ -33,6 +33,19 @@ html, body {
   z-index: 23;
 }
 
+#winner-text {
+  position: absolute;
+  text-align: center;
+  margin: 0 auto;
+  width: 50%;
+  align-self: center;
+  z-index: 42;
+}
+
+.no-win {
+  display: none;
+}
+
 table {
   border-collapse: collapse;
   position: absolute;
