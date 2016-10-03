@@ -59,12 +59,6 @@ td {
   padding: 0;
 }
 
-
-tr:hover {
-  /* background-color: rgba(32, 107, 236, 0.3); */
-  /* background-color: #14AFFA; */
-}
-
 .bottom {
   border-left: 2px solid #14AFFA;
 }
