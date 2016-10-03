@@ -14,16 +14,16 @@ class Board extends React.Component {
       // Initialize the board with objects. At each position hold which player has played the cell
       // and the highest possible sequence of one color at that point.
       board: _.range(COLS).map(function () {
-               return {
-                 state: _.range(ROWS).map(function () {
-                          return new Object({
-                            // Return Object for future features
-                            player: 0
-                          }); 
-                        }),
-                 lastPlayed: -1
-               }
-             }),
+        return {
+          state: _.range(ROWS).map(function () {
+            return new Object({
+              // Return Object for future features
+              player: 0
+            }); 
+          }),
+          lastPlayed: -1
+        }
+      }),
       player: 1,
       started: false,
       winner: 0
@@ -31,48 +31,38 @@ class Board extends React.Component {
   }
   
   checkHorizontal(player, col, lastPlayedRow) {
-    const board = this.state.board;
+    const { board } = this.state;
     var colLeft = col - 1;
     var colRight = col + 1;
     var count = 1;
-    var left, right;
 
-    if (colLeft >= 0) {
-      left = board[colLeft].state[lastPlayedRow + 1];
-    }
-    if (colRight < COLS) {
-      right = board[colRight].state[lastPlayedRow + 1];
-    }
-
-    while (colLeft >= 0 && left.player === player) {
+    while (colLeft >= 0 && board[colLeft].state[lastPlayedRow + 1].player === player) {
       count += 1;
       colLeft -= 1;
-      left = board[colLeft].state[lastPlayedRow + 1];
     }
-    while (colRight < COLS && right.player === player) {
+    while (colRight < COLS && board[colRight].state[lastPlayedRow + 1].player === player) {
       count += 1;
       colRight += 1;
-      right = board[colRight].state[lastPlayedRow + 1];
     }
     if (count >= WIN) {
-      this.state.winner = player;
+      this.setState({
+        winner: player
+      });
     }
   } 
 
   checkVertical(player, col, lastPlayedRow) {
     const board = this.state.board;
     var count = 1;
-    var down;
-    if (lastPlayedRow >= 0) {
-      down = board[col].state[lastPlayedRow]
-    }
-    while (lastPlayedRow >= 0 && down.player === player) {
+
+    while (lastPlayedRow >= 0 && board[col].state[lastPlayedRow].player === player) {
       count += 1;
       lastPlayedRow -= 1;
-      down = board[col].state[lastPlayedRow]
     }
     if (count >= WIN) {
-      this.state.winner = player;
+      this.setState({
+        winner: player
+      });
     }
   } 
   
@@ -83,30 +73,21 @@ class Board extends React.Component {
     var rowDown = lastPlayedRow;
     var colRight = col + 1;
     var rowUp = lastPlayedRow + 2;
-    var bottomLeft;
-    var topRight;
 
-    if (colLeft >= 0 && rowDown >= 0) {
-      bottomLeft = board[colLeft].state[rowDown];
-    }
-    if (colRight < COLS && rowUp < ROWS) {
-      topRight = board[colRight].state[rowUp];
-    }
-
-    while (colLeft >= 0 && rowDown >= 0 && bottomLeft.player === player) {
+    while (colLeft >= 0 && rowDown >= 0 && board[colLeft].state[rowDown].player === player) {
       count += 1;
       colLeft -= 1;
       rowDown -= 1;
-      bottomLeft = board[colLeft].state[rowDown];
     }
-    while (colRight < COLS && rowUp < ROWS && topRight.player === player) {
+    while (colRight < COLS && rowUp < ROWS && board[colRight].state[rowUp].player === player) {
       count += 1;
       colRight += 1;
       rowUp += 1;
-      topRight = board[colRight].state[rowUp];
     }
     if (count >= WIN) {
-      this.state.winner = player;
+      this.setState({
+        winner: player
+      });
     }
   }
 
@@ -117,30 +98,21 @@ class Board extends React.Component {
     var rowUp = lastPlayedRow + 2;
     var colRight = col + 1;
     var rowDown = lastPlayedRow;
-    var topLeft;
-    var bottomRight;
 
-    if (colLeft >= 0 && rowUp < ROWS) {
-      topLeft = board[colLeft].state[rowUp];
-    }
-    if (colRight < COLS && rowDown >= 0) {
-      bottomRight = board[colRight].state[rowDown];
-    }
-
-    while (colRight < COLS && rowDown >= 0 && bottomRight.player === player) {
+    while (colRight < COLS && rowDown >= 0 && board[colRight].state[rowDown].player === player) {
       count += 1;
       colRight += 1;
       rowDown -= 1;
-      bottomRight = board[colRight].state[rowDown];
     }
-    while (colLeft >= 0 && rowUp < ROWS && topLeft.player === player) {
+    while (colLeft >= 0 && rowUp < ROWS && board[colLeft].state[rowUp].player === player) {
       count += 1;
       colLeft -= 1;
       rowUp += 1;
-      topLeft = board[colLeft].state[rowUp];
     }
     if (count >= WIN) {
-      this.state.winner = player;
+      this.setState({
+        winner: player
+      });
     }
   }
 
@@ -154,25 +126,27 @@ class Board extends React.Component {
   }
 
   handleClick(col, lastPlayedRow) {
-    var newState = this.state.board,
-        player = this.state.player === 1 ? 2 : 1;
+    const { board, player }  = this.state;
+    const newPlayer = player === 1 ? 2 : 1;
+    var newState = board;
     
-    this.checkWin(this.state.player, col, lastPlayedRow); 
-    newState[col].state[lastPlayedRow + 1].player = this.state.player;
+    this.checkWin(player, col, lastPlayedRow); 
+    newState[col].state[lastPlayedRow + 1].player = player;
     newState[col].lastPlayed += 1;
     this.setState({
       board: newState,
-      player: player,
+      player: newPlayer,
       started: true
     });
   }
 
   generateCols() {
+    const { board, winner } = this.state;
     var i, cols = [];
 
     for (i = 0; i < COLS; i += 1) {
       cols.push(
-        <Column key={i} handleClick={this.handleClick} column={i} columnState={this.state.board[i]}/>
+        <Column winner={winner} key={i} handleClick={this.handleClick} column={i} columnState={board[i]}/>
       );
     }
     return cols;
