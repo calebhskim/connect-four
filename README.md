@@ -16,3 +16,4 @@ Then navigate to [http://localhost:3000/](http://localhost:3000/).
 * Add hot-reloading
 * Add tests
 * When live handle multiple games
+* Add computer to play against
