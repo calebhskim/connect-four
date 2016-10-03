@@ -33,6 +33,19 @@ html, body {
   z-index: 23;
 }
 
+#winner-text {
+  position: absolute;
+  text-align: center;
+  margin: 0 auto;
+  width: 50%;
+  align-self: center;
+  z-index: 42;
+}
+
+.no-win {
+  display: none;
+}
+
 table {
   border-collapse: collapse;
   position: absolute;
@@ -44,11 +57,6 @@ td {
   height: 100px;
   width: 100px;
   padding: 0;
-}
-
-tr:hover {
-  /* background-color: rgba(32, 107, 236, 0.3); */
-  background-color: #14AFFA;
 }
 
 .bottom {
