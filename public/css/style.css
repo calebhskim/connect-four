@@ -49,6 +49,7 @@ html, body {
 table {
   border-collapse: collapse;
   position: absolute;
+  align-self: center;
   transform: rotate(270deg);
 }
 
