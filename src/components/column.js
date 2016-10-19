@@ -54,7 +54,15 @@ class Column extends React.Component {
     };
 
     return (
-      <tr style={colStyle} onClick={this.handleClick} onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} >
+      <tr 
+        style={colStyle}
+        onClick={this.handleClick}
+        onMouseEnter={this.handleHover}
+        onMouseLeave={this.handleHover}
+        onTouchStart={this.touchStart}
+        onTouchEnd={this.touchEnd}
+        onTouchCancel={this.touchCancel}
+      >
         {this.generateRows()}
       </tr>
     );

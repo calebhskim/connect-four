@@ -57,7 +57,7 @@ td {
   border: None;
   height: 100px;
   width: 100px;
-  padding: 0;
+  padding: 5px 5px;
 }
 
 .bottom {
@@ -65,8 +65,8 @@ td {
 }
 
 .cell {
-  height: 70%;
-  width: 70%;
+  height: 80px;
+  width: 80px;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -88,4 +88,26 @@ td {
 
 .started {
   display: none;
+}
+
+@media (max-width : 768px) {
+  #board {
+    width: 95%;
+  }
+  
+  td {
+    height: 50px;
+    width: 50px;
+  }
+
+  .cell {
+    height: 40px;
+    width: 40px; 
+  }
+}
+
+@media (max-width : 480px) {
+  #table {
+    margin: 0 10px;
+  }
 }
