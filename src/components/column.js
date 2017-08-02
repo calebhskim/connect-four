@@ -1,9 +1,9 @@
-const React = require('react'),
-      Cell = require('./cell.js');
+import React, { Component } from 'react';
+import Cell from './Cell';
 
 const ROWS = 6;
 
-class Column extends React.Component {
+class Column extends Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
@@ -61,4 +61,4 @@ class Column extends React.Component {
   }
 }
 
-module.exports = Column;
+export default Column;

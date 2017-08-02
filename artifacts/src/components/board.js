@@ -19,17 +19,17 @@ class Board extends React.Component {
             return new Object({
               // Return Object for future features
               player: 0
-            });
+            }); 
           }),
           lastPlayed: -1
-        };
+        }
       }),
       player: 1,
       started: false,
       winner: 0
     };
   }
-
+  
   checkHorizontal(player, col, lastPlayedRow) {
     const { board } = this.state;
     var colLeft = col - 1;
@@ -49,7 +49,7 @@ class Board extends React.Component {
         winner: player
       });
     }
-  }
+  } 
 
   checkVertical(player, col, lastPlayedRow) {
     const board = this.state.board;
@@ -64,8 +64,8 @@ class Board extends React.Component {
         winner: player
       });
     }
-  }
-
+  } 
+  
   checkDownLeft(player, col, lastPlayedRow) {
     const board = this.state.board;
     var count = 1;
@@ -126,11 +126,11 @@ class Board extends React.Component {
   }
 
   handleClick(col, lastPlayedRow) {
-    const { board, player } = this.state;
+    const { board, player }  = this.state;
     const newPlayer = player === 1 ? 2 : 1;
     var newState = board;
-
-    this.checkWin(player, col, lastPlayedRow);
+    
+    this.checkWin(player, col, lastPlayedRow); 
     newState[col].state[lastPlayedRow + 1].player = player;
     newState[col].lastPlayed += 1;
     this.setState({
@@ -142,49 +142,32 @@ class Board extends React.Component {
 
   generateCols() {
     const { board, winner } = this.state;
-    var i,
-        cols = [];
+    var i, cols = [];
 
     for (i = 0; i < COLS; i += 1) {
-      cols.push(React.createElement(Column, { winner: winner, key: i, handleClick: this.handleClick, column: i, columnState: board[i] }));
+      cols.push(
+        <Column winner={winner} key={i} handleClick={this.handleClick} column={i} columnState={board[i]}/>
+      );
     }
     return cols;
   }
 
   render() {
-    return React.createElement(
-      'div',
-      { id: 'board' },
-      React.createElement(
-        'div',
-        { id: 'start', className: this.state.started ? "started" : "not-started" },
-        React.createElement(
-          'h2',
-          null,
-          'Click any column to start!'
-        )
-      ),
-      React.createElement(
-        'div',
-        { id: 'winner-text', className: this.state.winner === 0 ? "no-win" : "win" },
-        React.createElement(
-          'h2',
-          null,
-          'Player ',
-          this.state.winner,
-          ' won!'
-        )
-      ),
-      React.createElement(
-        'table',
-        null,
-        React.createElement(
-          'tbody',
-          null,
-          this.generateCols()
-        )
-      )
-    );
+    return (
+      <div id="board">
+        <div id="start" className={this.state.started ? "started" : "not-started"}>
+          <h2>Click any column to start!</h2>
+        </div>
+        <div id="winner-text" className={this.state.winner === 0 ? "no-win" : "win"}>
+          <h2>Player {this.state.winner} won!</h2>
+        </div>
+        <table>
+          <tbody>
+            {this.generateCols()}
+          </tbody>
+        </table>
+      </div>
+    )
   }
 }
 

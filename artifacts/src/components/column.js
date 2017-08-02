@@ -19,7 +19,7 @@ class Column extends React.Component {
       handleClick(column, columnState.lastPlayed);
     }
   }
-
+  
   handleHover() {
     const { winner } = this.props;
     const { hover } = this.state;
@@ -30,7 +30,7 @@ class Column extends React.Component {
     }
 
     this.setState({
-      hover: hov
+      hover: hov 
     });
   }
 
@@ -38,7 +38,9 @@ class Column extends React.Component {
     var cells = [];
 
     for (var i = 0; i < ROWS; i++) {
-      cells.push(React.createElement(Cell, { key: i, player: this.props.columnState.state[i].player, row: i }));
+      cells.push(
+        <Cell key={i} player={this.props.columnState.state[i].player} row={i} />
+      );
     }
 
     return cells;
@@ -51,10 +53,10 @@ class Column extends React.Component {
       backgroundColor: hover ? '#14AFFA' : 'transparent'
     };
 
-    return React.createElement(
-      'tr',
-      { style: colStyle, onClick: this.handleClick, onMouseEnter: this.handleHover, onMouseLeave: this.handleHover },
-      this.generateRows()
+    return (
+      <tr style={colStyle} onClick={this.handleClick} onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} >
+        {this.generateRows()}
+      </tr>
     );
   }
 }

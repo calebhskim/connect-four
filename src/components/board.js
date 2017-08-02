@@ -1,12 +1,13 @@
-const React = require('react'),
-      _ = require('lodash'),
-      Column = require('./column.js');
+import React, { Component } from 'react';
+import _ from 'lodash';
+
+import Column from './Column';
 
 const COLS = 7,
       ROWS = 6,
       WIN = 4;
 
-class Board extends React.Component {
+class Board extends Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
@@ -16,10 +17,10 @@ class Board extends React.Component {
       board: _.range(COLS).map(function () {
         return {
           state: _.range(ROWS).map(function () {
-            return new Object({
+            return {
               // Return Object for future features
               player: 0
-            }); 
+            }; 
           }),
           lastPlayed: -1
         }
@@ -171,4 +172,4 @@ class Board extends React.Component {
   }
 }
 
-module.exports = Board;
+export default Board;

@@ -9,12 +9,13 @@ class Cell extends React.Component {
 
   render() {
     const player = playerClasses[this.props.player];
-
-    return React.createElement(
-      "td",
-      { className: this.props.row == 0 ? "bottom" : "" },
-      React.createElement("div", { className: `cell ${ player }` })
-    );
+    
+    return (
+      <td className={this.props.row == 0 ? "bottom" : ""}>
+        <div className={`cell ${player}`}>
+        </div>
+      </td>
+    )
   }
 }
 

@@ -1,12 +1,12 @@
-const React = require('react'),
-      Board = require('./board.js');
+import React from 'react';
+import Board from './Board';
 
 function App() {
   return (
-      <div id="app">
-        <Board />
-      </div>
-      );
+    <div id="app">
+      <Board />
+    </div>
+  );
 }
 
-module.exports = App;
+export default = App;
